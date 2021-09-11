@@ -10,7 +10,7 @@ import com.mashape.unirest.http.Unirest;
 
 public class NewEpisodeTabOpener extends MaloWCliApplication
 {
-  public static void main(String[] args) throws Exception
+  public static void main(String[] args)
   {
     MaloWLogger.setLoggingThresholdToInfo();
     NewEpisodeTabOpener program = new NewEpisodeTabOpener();
@@ -20,7 +20,7 @@ public class NewEpisodeTabOpener extends MaloWCliApplication
   private CloseableHttpClient httpClient = HttpClients.createDefault();
   private TabOpenerProcess tabOpener = new TabOpenerProcess();
 
-  public NewEpisodeTabOpener() throws Exception
+  public NewEpisodeTabOpener()
   {
     Unirest.setHttpClient(this.httpClient);
     this.tabOpener.start();

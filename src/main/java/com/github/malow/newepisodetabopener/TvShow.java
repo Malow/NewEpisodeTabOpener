@@ -44,12 +44,9 @@ public class TvShow
       {
         return false;
       }
-      else
+      if (this.tvdbId.equals(other.tvdbId))
       {
-        if (this.tvdbId.equals(other.tvdbId))
-        {
-          return true;
-        }
+        return true;
       }
     }
     else

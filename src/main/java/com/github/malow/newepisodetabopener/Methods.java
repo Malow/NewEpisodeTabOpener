@@ -91,10 +91,10 @@ public class Methods
           .header("Authorization", "Bearer " + config.apiToken)
           .queryString("page", nextPage)
           .asString().getBody().toString();
-      if (responseJson.contains("504 ERROR"))
+      if (responseJson.contains("504 ERROR") || responseJson.contains("502 Bad Gateway") || responseJson.contains("Kube Metrics Server"))
       {
         // Cloudflare error, wait a minute and go again
-        MaloWLogger.info("Cloudflare 504 error, sleeping and trying again.");
+        MaloWLogger.info("Cloudflare 502/504 or 'Kube Metrics Server' error, sleeping and trying again.");
         Thread.sleep(60000);
         continue;
       }
