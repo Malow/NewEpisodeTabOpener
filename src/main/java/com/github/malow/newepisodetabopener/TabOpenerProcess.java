@@ -3,7 +3,6 @@ package com.github.malow.newepisodetabopener;
 import java.awt.Desktop;
 import java.net.URI;
 import java.time.LocalDateTime;
-import java.util.List;
 
 import com.github.malow.malowlib.MaloWLogger;
 import com.github.malow.malowlib.confighandler.ConfigHandler;
@@ -27,19 +26,15 @@ public class TabOpenerProcess extends MaloWProcess
         {
           try
           {
-            List<Episode> eps = Methods.getNewEpisodes(tvShow.tvdbId);
-            for (Episode ep : eps)
-            {
-              String episodeSearch = tvShow.imdbId + " " + ep.toString();
-              episodeSearch = episodeSearch.replaceAll(" ", "+");
-              String url = "https://rarbg.to/torrents.php?search=" + episodeSearch + "&order=size&by=DESC";
-              MaloWLogger.info("Found new episode: " + tvShow.name + " " + ep.toString() + ": " + url);
-              Desktop.getDesktop().browse(new URI(url));
-            }
-            Episode latestEp = Methods.getLatestEpisodeFromList(eps);
-            if (latestEp != null)
+            Episode latestEp = Methods.getLatestEpisode(tvShow.theMovieDbId);
+            if (latestEp.isNewerThan(tvShow.lastFoundEpisode))
             {
               tvShow.lastFoundEpisode = latestEp;
+              String episodeSearch = tvShow.imdbId + " " + latestEp.toString();
+              episodeSearch = episodeSearch.replaceAll(" ", "+");
+              String url = "https://rarbg.to/torrents.php?search=" + episodeSearch + "&order=size&by=DESC";
+              MaloWLogger.info("Found new episode: " + tvShow.name + " " + latestEp.toString() + ": " + url);
+              Desktop.getDesktop().browse(new URI(url));
             }
           }
           catch (Exception e)

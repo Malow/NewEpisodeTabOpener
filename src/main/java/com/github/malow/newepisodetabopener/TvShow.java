@@ -4,7 +4,7 @@ public class TvShow
 {
   public String imdbId;
   public String name;
-  public String tvdbId;
+  public int theMovieDbId;
   public Episode lastFoundEpisode;
 
   public TvShow(String imdbId)
@@ -18,7 +18,9 @@ public class TvShow
     final int prime = 31;
     int result = 1;
     result = prime * result + (this.imdbId == null ? 0 : this.imdbId.hashCode());
-    result = prime * result + (this.tvdbId == null ? 0 : this.tvdbId.hashCode());
+    result = prime * result + (this.lastFoundEpisode == null ? 0 : this.lastFoundEpisode.hashCode());
+    result = prime * result + (this.name == null ? 0 : this.name.hashCode());
+    result = prime * result + this.theMovieDbId;
     return result;
   }
 
@@ -29,33 +31,48 @@ public class TvShow
     {
       return true;
     }
-    if (obj == null)
-    {
-      return false;
-    }
-    if (this.getClass() != obj.getClass())
+    if ((obj == null) || (this.getClass() != obj.getClass()))
     {
       return false;
     }
     TvShow other = (TvShow) obj;
     if (this.imdbId == null)
     {
-      if (this.tvdbId == null)
+      if (other.imdbId != null)
       {
         return false;
       }
-      if (this.tvdbId.equals(other.tvdbId))
-      {
-        return true;
-      }
     }
-    else
+    else if (!this.imdbId.equals(other.imdbId))
     {
-      if (this.imdbId.equals(other.imdbId))
+      return false;
+    }
+    if (this.lastFoundEpisode == null)
+    {
+      if (other.lastFoundEpisode != null)
       {
-        return true;
+        return false;
       }
     }
-    return false;
+    else if (!this.lastFoundEpisode.equals(other.lastFoundEpisode))
+    {
+      return false;
+    }
+    if (this.name == null)
+    {
+      if (other.name != null)
+      {
+        return false;
+      }
+    }
+    else if (!this.name.equals(other.name))
+    {
+      return false;
+    }
+    if (this.theMovieDbId != other.theMovieDbId)
+    {
+      return false;
+    }
+    return true;
   }
 }
